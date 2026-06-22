@@ -708,6 +708,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
+  // 结束对话按钮
+  document.querySelectorAll('.end-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (confirm('确定要结束当前对话吗？\n\n对话记录将会被清除。')) {
+        // 清除单人对谈状态
+        currentPrivateChat = null;
+        privateHistory = [];
+        // 清除圆桌展示
+        const salonCards = document.getElementById('salon-cards');
+        if (salonCards) salonCards.innerHTML = '';
+        // 清除输入框
+        if (questionInput) questionInput.value = '';
+        const privateInput = document.getElementById('private-input');
+        if (privateInput) privateInput.value = '';
+        // 返回首页
+        showPage('page-landing');
+      }
+    });
+  });
+  
   // 圆桌提交
   const submitRoundtable = document.getElementById('submit-roundtable');
   const questionInput = document.getElementById('question-input');
@@ -758,12 +778,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
-  // 渲染首页名人画廊（输入页）
+  // 渲染首页名人画廊（输入页）——圆桌圆环布局
   const gallery = document.getElementById('cast-gallery');
   if (gallery) {
+    const count = CAST.length;
     CAST.forEach((cast, i) => {
       const member = document.createElement('div');
       member.className = 'cast-member';
+      // 从顶部（-90°）开始，均匀分布
+      const angle = -90 + i * (360 / count);
+      member.style.setProperty('--angle', angle + 'deg');
       member.innerHTML = `
         <div class="cast-avatar" data-initial="${cast.initial}" style="--cast-color: ${cast.color}"><img src="avatars/${cast.avatar}" alt="${cast.name}"></div>
         <div class="cast-name">${cast.name}</div>
