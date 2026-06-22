@@ -384,12 +384,7 @@ body {
   opacity: 1;
 }
 
-.cast-member:hover .cast-avatar {
-  transform: scale(1.08);
-  box-shadow: 
-    0 6px 16px rgba(0, 0, 0, 0.4),
-    0 0 0 3px rgba(201, 169, 110, 0.15);
-}
+/* 头像hover效果已移除：避免加载时位置跳动 */
 
 .cast-avatar img {
   width: 100%;
@@ -1515,16 +1510,6 @@ body {
   .salon-continue:hover,
   .chat-send-btn:hover,
   .back-btn:hover {
-    transform: none;
-  }
-  
-  .cast-member:hover,
-  .select-card:hover {
-    transform: none;
-  }
-  
-  .cast-avatar:hover,
-  .select-card .select-avatar:hover {
     transform: none;
   }
   
