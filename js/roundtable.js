@@ -673,6 +673,12 @@ function generateFakePrivateReply(name, question) {
 // =========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 预加载所有头像图片，避免切换页面时加载延迟
+  CAST.forEach(cast => {
+    const img = new Image();
+    img.src = `avatars/${cast.avatar}`;
+  });
+  
   // API Key 弹窗绑定（硬编码模式下仅显示使用额度）
   const apikeyModal = document.getElementById('apikey-modal');
   
