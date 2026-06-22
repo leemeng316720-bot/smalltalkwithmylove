@@ -267,7 +267,7 @@ body {
 }
 
 .landing-logo .logo-img {
-  width: 120px;
+  width: 80px;
   height: auto;
   filter: drop-shadow(0 4px 20px rgba(201, 169, 110, 0.2));
   transition: transform 400ms ease, filter 400ms ease;
@@ -279,9 +279,15 @@ body {
 }
 
 /* 小屏幕 Logo */
+@media (max-width: 768px) {
+  .landing-logo .logo-img {
+    width: 70px;
+  }
+}
+
 @media (max-width: 480px) {
   .landing-logo .logo-img {
-    width: 90px;
+    width: 60px;
   }
 }
 
@@ -376,10 +382,6 @@ body {
 
 .cast-member:hover {
   opacity: 1;
-}
-
-.cast-member:hover .cast-avatar {
-  transform: scale(1.08);
 }
 
 .cast-member:hover .cast-avatar {
