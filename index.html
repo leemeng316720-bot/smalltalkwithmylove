@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>名人对谈 | 时光圆桌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/salon.css">
+</head>
+<body>
+
+  <!-- =========================================
+       加载遮罩
+       ========================================= -->
+  <div id="loading-curtain" class="loading-curtain">
+    <div class="loading-orb-enhanced">
+      <div class="loading-center"></div>
+    </div>
+    <div class="loading-cast" id="loading-cast">
+      <div class="loading-dot" data-index="0"></div>
+      <div class="loading-dot" data-index="1"></div>
+      <div class="loading-dot" data-index="2"></div>
+      <div class="loading-dot" data-index="3"></div>
+      <div class="loading-dot" data-index="4"></div>
+      <div class="loading-dot" data-index="5"></div>
+      <div class="loading-dot" data-index="6"></div>
+    </div>
+    <div id="loading-text" class="loading-text">七位思想家正在落座……</div>
+  </div>
+
+  <!-- =========================================
+       首页（Landing）
+       ========================================= -->
+  <section id="page-landing" class="page-section active">
+    <div class="landing-container">
+      <h1 class="landing-title">名人对谈</h1>
+      <p class="landing-subtitle">
+        七位穿越时空的思想家，围坐在一张圆桌旁。<br>
+        你问一个问题，他们各自作答。
+      </p>
+      <div class="landing-divider"></div>
+      
+      <div class="mode-selection">
+        <button id="btn-roundtable" class="mode-btn">
+          <span class="mode-btn-icon">◈</span>
+          <div class="mode-btn-title">圆桌会议</div>
+          <div class="mode-btn-desc">
+            七位名人同时回应你的问题，<br>
+            然后你可以选择与其中一位深入对话
+          </div>
+        </button>
+        
+        <button id="btn-private" class="mode-btn">
+          <span class="mode-btn-icon">◉</span>
+          <div class="mode-btn-title">单人对谈</div>
+          <div class="mode-btn-desc">
+            选择一位名人，<br>
+            与他/她进行一对一的深度交流
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       圆桌输入页
+       ========================================= -->
+  <section id="page-roundtable-input" class="page-section">
+    <div class="input-container">
+      <button class="back-btn" data-back>
+        <span>←</span> 返回首页
+      </button>
+      
+      <h2 class="input-title">圆桌会议</h2>
+      <p class="input-subtitle">七位思想家已落座，等待你的提问</p>
+      
+      <!-- 名人画廊 -->
+      <div id="cast-gallery" class="cast-gallery"></div>
+      
+      <!-- 问题输入 -->
+      <div class="question-area">
+        <textarea
+          id="question-input"
+          class="question-input"
+          placeholder="在这里写下你的问题……&#10;例如：什么是孤独？&#10;或：如何面对失败？"
+        ></textarea>
+        <button id="submit-roundtable" class="submit-btn">
+          提出问题
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       圆桌展示页
+       ========================================= -->
+  <section id="page-roundtable-show" class="page-section">
+    <div class="salon-stage">
+      <div class="salon-header">
+        <h2>时光圆桌</h2>
+        <div class="user-question" id="roundtable-question"></div>
+      </div>
+      <div id="salon-stage"></div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       单人对谈选择页
+       ========================================= -->
+  <section id="page-private-select" class="page-section">
+    <div class="input-container">
+      <button class="back-btn" data-back>
+        <span>←</span> 返回首页
+      </button>
+      
+      <h2 class="input-title">选择一位对话者</h2>
+      <p class="input-subtitle">你想与谁深入交流？</p>
+      
+      <div id="private-select-gallery" style="
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        max-width: 800px;
+        margin: 40px auto;
+      "></div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       单人对谈页
+       ========================================= -->
+  <section id="page-private" class="page-section">
+    <div class="chat-container">
+      <div class="chat-header" id="chat-header">
+        <!-- 动态填充 -->
+      </div>
+      
+      <div class="chat-messages" id="chat-messages"></div>
+      
+      <div class="chat-input-bar">
+        <input
+          type="text"
+          id="private-input"
+          placeholder="输入你的问题……"
+          autocomplete="off"
+        >
+        <button id="send-private" class="chat-send-btn">发送</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       API Key 设置弹窗
+       ========================================= -->
+  <div id="apikey-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+      <h3 class="modal-title">设置 API Key</h3>
+      <p class="modal-desc">
+        名人对谈使用 Kimi（Moonshot AI）API 来生成对话内容。<br>
+        你的 API Key 仅存储在本地浏览器中，不会发送到任何第三方服务器。
+      </p>
+      <input
+        type="text"
+        id="apikey-input"
+        class="modal-input"
+        placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        autocomplete="off"
+      >
+      <div class="modal-actions">
+        <button id="apikey-save" class="submit-btn" style="margin:0;">保存</button>
+        <a href="https://platform.moonshot.cn/" target="_blank" class="modal-link">还没有 API Key？</a>
+      </div>
+      <p class="modal-note">首次使用需要输入，后续自动读取。</p>
+    </div>
+  </div>
+
+  <script src="js/roundtable.js"></script>
+</body>
+</html>
