@@ -66,7 +66,7 @@ const CAST = [
 // Supabase Edge Functions 配置
 // =========================================
 // ⚠️ 部署后替换为实际的 Supabase 项目地址和 Anon Key
-const SUPABASE_URL = 'https://odjqhckldirrujshkllg.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://odjqhckldirrujshkllg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kanFoY2tsZGlycnVqc2hrbGxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMDQ0NTksImV4cCI6MjA5Nzc4MDQ1OX0.ZO8FrEFzh0jzDta-fXzHI7XdnGLJlvtF_8IA5fRZ43M';
 
 // =========================================
