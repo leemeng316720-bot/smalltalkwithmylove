@@ -1896,3 +1896,316 @@ body {
   margin-top: 20px;
   font-style: italic;
 }
+
+/* =========================================
+   Tesserae - 灵感引擎样式
+   ========================================= */
+
+/* 灵感碎片按钮 */
+.chat-spark-btn {
+  padding: 12px 16px;
+  background: rgba(201, 169, 110, 0.08);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  border-radius: 8px;
+  color: #c9a96e;
+  font-family: inherit;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 300ms ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.chat-spark-btn:hover {
+  background: rgba(201, 169, 110, 0.15);
+  border-color: #c9a96e;
+  box-shadow: 0 4px 12px rgba(201, 169, 110, 0.1);
+}
+
+/* 共鸣测量按钮 */
+.tesserae-btn {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 32px auto 0;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid #c9a96e;
+  border-radius: 4px;
+  color: #c9a96e;
+  font-family: inherit;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.tesserae-btn:hover {
+  background: rgba(201, 169, 110, 0.05);
+  box-shadow: 0 4px 20px rgba(201, 169, 110, 0.15);
+}
+
+/* 共鸣结果展示 */
+.tesserae-resonance {
+  margin-top: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #252218 0%, #1f1c18 100%);
+  border: 1px solid #3a3228;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 600ms ease-out;
+}
+
+.tesserae-resonance-header {
+  font-size: 1rem;
+  color: #e8d5b7;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tesserae-icon {
+  color: #c9a96e;
+  font-size: 1.125rem;
+}
+
+.tesserae-resonance-body {
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: #c9c0b0;
+}
+
+.tesserae-resonance-item {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(58, 50, 40, 0.5);
+}
+
+.tesserae-resonance-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.tesserae-resonance-pair {
+  font-size: 0.8125rem;
+  color: #8a7a6a;
+  margin-bottom: 4px;
+}
+
+.tesserae-resonance-value {
+  font-size: 0.9375rem;
+  color: #c9a96e;
+  font-weight: 600;
+}
+
+.tesserae-resonance-phase {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+}
+
+.tesserae-phase-constructive { background: rgba(45, 90, 39, 0.3); color: #7a9a7a; }
+.tesserae-phase-destructive { background: rgba(139, 26, 26, 0.3); color: #c9a9a9; }
+.tesserae-phase-standing { background: rgba(92, 74, 107, 0.3); color: #b9a9c9; }
+.tesserae-phase-beat { background: rgba(74, 55, 40, 0.3); color: #c9b9a9; }
+.tesserae-phase-chaos { background: rgba(58, 26, 74, 0.3); color: #c9a9c9; }
+
+.tesserae-close {
+  display: block;
+  margin: 16px auto 0;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid #3a3228;
+  border-radius: 4px;
+  color: #8a7a6a;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.tesserae-close:hover {
+  border-color: #c9a96e;
+  color: #c9a96e;
+}
+
+/* 灵感弹窗 */
+.tesserae-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tesserae-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.tesserae-modal-card {
+  position: relative;
+  width: 90%;
+  max-width: 520px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: linear-gradient(135deg, #252218 0%, #1f1c18 100%);
+  border: 1px solid #3a3228;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 169, 110, 0.05);
+  animation: fadeIn 400ms ease-out;
+  z-index: 1;
+}
+
+.tesserae-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.125rem;
+  color: #e8d5b7;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+}
+
+.tesserae-modal-close {
+  background: transparent;
+  border: none;
+  color: #8a7a6a;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: color 300ms;
+  line-height: 1;
+}
+
+.tesserae-modal-close:hover {
+  color: #c9a96e;
+}
+
+.tesserae-modal-body {
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: #c9c0b0;
+  margin-bottom: 16px;
+}
+
+.tesserae-modal-compose {
+  margin-bottom: 20px;
+}
+
+.tesserae-compose-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #252218 0%, #1f1c18 100%);
+  border: 1px solid #3a3228;
+  border-radius: 8px;
+  color: #e8d5b7;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  resize: vertical;
+  outline: none;
+  transition: border-color 300ms, box-shadow 300ms;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tesserae-compose-input:focus {
+  border-color: #5a4a3a;
+  box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tesserae-compose-input::placeholder {
+  color: #6a5a4a;
+  font-style: italic;
+}
+
+.tesserae-fragment {
+  padding: 16px 20px;
+  background: rgba(201, 169, 110, 0.05);
+  border-left: 3px solid rgba(201, 169, 110, 0.3);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.tesserae-fragment-meta {
+  font-size: 0.75rem;
+  color: #8a7a6a;
+  margin-top: 8px;
+  font-style: normal;
+}
+
+.tesserae-fragment-bridge {
+  font-size: 0.8125rem;
+  color: #8a7a6a;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(58, 50, 40, 0.5);
+  font-style: normal;
+}
+
+.tesserae-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.tesserae-action-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #3a3228;
+  border-radius: 4px;
+  color: #c9c0b0;
+  font-family: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 300ms ease;
+  white-space: nowrap;
+}
+
+.tesserae-action-btn:hover {
+  border-color: #c9a96e;
+  color: #c9a96e;
+  background: rgba(201, 169, 110, 0.05);
+}
+
+.tesserae-action-btn.primary {
+  border-color: #c9a96e;
+  color: #c9a96e;
+}
+
+.tesserae-action-btn.primary:hover {
+  background: rgba(201, 169, 110, 0.1);
+}
+
+/* Shard 破碎结果展示 */
+.tesserae-shard-output {
+  padding: 16px 20px;
+  background: rgba(37, 34, 24, 0.6);
+  border: 1px dashed rgba(201, 169, 110, 0.2);
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  color: #c9c0b0;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.tesserae-shard-mode {
+  font-size: 0.75rem;
+  color: #8a7a6a;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}

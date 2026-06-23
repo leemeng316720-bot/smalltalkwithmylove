@@ -115,6 +115,15 @@
         <div class="user-question" id="roundtable-question"></div>
       </div>
       <div id="salon-stage"></div>
+      <!-- Tesserae 共鸣测量 -->
+      <div class="tesserae-resonance" id="tesserae-resonance" style="display:none;">
+        <div class="tesserae-resonance-header">
+          <span class="tesserae-icon">✦</span> 七人共鸣测量
+        </div>
+        <div class="tesserae-resonance-body" id="tesserae-resonance-body"></div>
+        <button class="tesserae-close" id="tesserae-resonance-close">关闭</button>
+      </div>
+      <button class="tesserae-btn" id="btn-measure-resonance" style="display:none;">✦ 测量七人共鸣</button>
     </div>
   </section>
 
@@ -167,6 +176,7 @@
           placeholder="输入你的问题……"
           autocomplete="off"
         >
+        <button id="tesserae-spark-btn" class="chat-spark-btn" title="灵感碎片">✦</button>
         <button id="send-private" class="chat-send-btn">发送</button>
       </div>
     </div>
@@ -197,6 +207,34 @@
     </div>
   </div>
 
+  <!-- Tesserae 灵感弹窗 -->
+  <div id="tesserae-modal" class="tesserae-modal" style="display:none;">
+    <div class="tesserae-modal-backdrop"></div>
+    <div class="tesserae-modal-card">
+      <div class="tesserae-modal-header">
+        <span class="tesserae-icon">✦</span>
+        <span id="tesserae-modal-title">灵感碎片</span>
+        <button class="tesserae-modal-close" id="tesserae-modal-close">✕</button>
+      </div>
+      <div class="tesserae-modal-body" id="tesserae-modal-body">
+        <!-- 动态内容 -->
+      </div>
+      <div class="tesserae-modal-compose">
+        <textarea 
+          id="tesserae-compose-input" 
+          class="tesserae-compose-input"
+          placeholder="在这里写下你想问的问题……"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="tesserae-modal-actions">
+        <button class="tesserae-action-btn" id="tesserae-refresh-btn">✦ 再来一次</button>
+        <button class="tesserae-action-btn primary" id="tesserae-send-btn">发送给名人</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/tesserae.js"></script>
   <script src="js/roundtable.js"></script>
 </body>
 </html>
