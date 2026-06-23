@@ -5,7 +5,81 @@
 // =========================================
 
 const TESSERAE = {
-  // ===== 意外发现碎片库 =====
+  // ===== 名人领域特定碎片库 =====
+  domainFragments: {
+    murakami: [
+      { fragment: "科尔特兰在演奏《A Love Supreme》时，连续吹了四分钟不降调。他说那不是技术，而是他已经不在乐器里了，他在声音本身的结构里。", source_domain: "爵士乐/即兴", weight: 8.2, acuity: 8.8 },
+      { fragment: "村上在《挪威的森林》里让主角在井边徘徊。井是孤独，但井也是入口——你往下掉的时候，可能进入另一个世界。", source_domain: "文学/孤独", weight: 7.5, acuity: 8.5 },
+      { fragment: "一个马拉松跑者说，跑到30公里的时候，身体已经不再属于他了，而意识变得极其清晰。这是身体的疲惫换精神的清醒。", source_domain: "跑步/冥想", weight: 7.0, acuity: 7.8 },
+      { fragment: "旧唱片店里的爵士乐唱片，有些封面已经泛黄，但唱片里的沟槽还和1960年一样。声音比封面更持久。", source_domain: "音乐/记忆", weight: 6.8, acuity: 7.5 },
+      { fragment: "猫在午后的阳光里睡觉，它的瞳孔从一条线变成圆形。你不知道它梦见了什么，但你知道它和你一样，在梦里有另一个世界。", source_domain: "超现实/日常", weight: 7.3, acuity: 8.0 },
+      { fragment: "翻译卡佛的时候，村上发现英文里的沉默在日语里需要更长的停顿。语言不同，沉默的密度也不同。", source_domain: "翻译/语言", weight: 8.0, acuity: 8.3 },
+      { fragment: "一个人在凌晨4点醒来，厨房里只有咖啡机的声音。这是世界上唯一的时刻，因为其他人都还在梦里。", source_domain: "日常/时间", weight: 6.5, acuity: 7.2 },
+      { fragment: "意大利面在沸水里翻滚，像某种古老的仪式。你不需要理解它，只需要知道什么时候该捞出来。", source_domain: "烹饪/直觉", weight: 5.8, acuity: 6.8 }
+    ],
+    arendt: [
+      { fragment: "在古希腊，'行动'（action）和'劳动'（labor）是严格区分的。劳动是为了生存，行动是为了在他人面前证明'你是谁'。", source_domain: "政治哲学/公共领域", weight: 8.5, acuity: 9.0 },
+      { fragment: "艾希曼在耶路撒冷审判时，说的最多的词是'我只是在执行命令'。这不是邪恶，而是不思考。阿伦特说：这就是'平庸之恶'。", source_domain: "政治/道德", weight: 9.0, acuity: 9.5 },
+      { fragment: "公共领域被技术化之后，Facebook上的'点赞'是行动吗？还是它只是劳动的伪装？", source_domain: "公共领域/技术", weight: 7.5, acuity: 8.2 },
+      { fragment: "苏格拉底从不直接回答，而是追问'你说的正义是什么意思'。这种追问本身就是一种政治行动。", source_domain: "哲学/政治", weight: 8.0, acuity: 8.5 },
+      { fragment: "一个暴君最害怕的不是反对派，而是那些拒绝参与公共生活的人。不参与本身就是抗议。", source_domain: "权力/反抗", weight: 7.8, acuity: 8.0 },
+      { fragment: "自由的反面不是专制，而是无世界性——当一个人被剥夺了在他人面前行动的空间时。", source_domain: "自由/存在", weight: 8.3, acuity: 8.8 },
+      { fragment: "革命和解放的区别：解放是摆脱压迫，革命是建立新的公共空间。前者是消极的，后者是积极的。", source_domain: "革命/政治", weight: 8.0, acuity: 8.5 },
+      { fragment: "判断不是规则的套用，而是在没有现成规则时，站在他人的立场上思考。这是阿伦特所说的'代表性思维'。", source_domain: "判断/伦理", weight: 8.5, acuity: 9.0 }
+    ],
+    fallaci: [
+      { fragment: "法拉奇在越南的弹坑里问一个美国士兵'你为什么在这里'，士兵说'我不知道'。那一刻，真相不是语言，而是士兵脸上的空洞。", source_domain: "战争/真相", weight: 8.8, acuity: 9.2 },
+      { fragment: "她采访基辛格时，基辛格说他'像美国牛仔一样'，这句话后来被基辛格说成了他最大的错误。", source_domain: "权力/采访", weight: 7.5, acuity: 8.0 },
+      { fragment: "一个女人在战场上不是'女性记者'——她是战场上的一个人，和其他士兵一样面对子弹。", source_domain: "性别/战争", weight: 8.0, acuity: 8.5 },
+      { fragment: "权力总是试图让你'说话漂亮'。法拉奇说：别用那些漂亮的词来包装。", source_domain: "权力/语言", weight: 7.8, acuity: 8.2 },
+      { fragment: "在采访霍梅尼时，法拉奇当场摘掉了面纱。那不是不尊重，那是她用自己的身体在说话。", source_domain: "身体/反抗", weight: 8.5, acuity: 9.0 },
+      { fragment: "她的书《给一个未出生的孩子》里，孩子问'为什么你要把我带到这个世界'。母亲回答：'因为我不知道答案。'", source_domain: "生命/写作", weight: 8.2, acuity: 8.8 },
+      { fragment: "战争不是抽象概念，是血和肉。你闻到硝烟味的时候，你就不再相信任何漂亮的政治词汇了。", source_domain: "战争/身体", weight: 9.0, acuity: 9.3 },
+      { fragment: "勇气不是不怕，而是害怕的时候仍然把问题问出来。法拉奇问了基辛格、霍梅尼、阿拉法特——她问的都是不让问的问题。", source_domain: "勇气/采访", weight: 8.5, acuity: 9.0 }
+    ],
+    rilke: [
+      { fragment: "里尔克在给青年诗人的信中说：'你必须忍受孤独。'不是战胜它，而是和它共处，像树和雨共处。", source_domain: "孤独/成长", weight: 8.0, acuity: 8.5 },
+      { fragment: "他在《杜伊诺哀歌》里写，美不是装饰，而是'恐怖的开始'。最美的东西也是最让人恐惧的。", source_domain: "诗歌/美学", weight: 8.5, acuity: 9.0 },
+      { fragment: "一朵玫瑰的花瓣数量不是随机的。它遵循斐波那契数列。自然本身在'写诗'。", source_domain: "自然/数学", weight: 7.0, acuity: 7.5 },
+      { fragment: "一个雕塑家说，他不是创造形态，而是释放被石头囚禁的形态。石头的沉默里已经包含了雕像。", source_domain: "艺术/创作", weight: 7.8, acuity: 8.2 },
+      { fragment: "里尔克说，死亡不是生命的终点，而是生命的'另一面'。就像硬币有两面，你不可能只看一面。", source_domain: "死亡/生命", weight: 8.3, acuity: 8.8 },
+      { fragment: "他在给卡卜斯的信中说：'不要问你能不能写，要问你是否必须写。'这不是能力问题，是必要性。", source_domain: "创作/使命", weight: 8.0, acuity: 8.5 },
+      { fragment: "等待不是空虚，而是让事情在内心慢慢成形。里尔克说：'耐心是对所有可能性的信任。'", source_domain: "等待/信任", weight: 7.5, acuity: 8.0 },
+      { fragment: "泉水从地底涌出，不是为了流向大海，而是因为它必须涌出。艺术的本质也是一样。", source_domain: "自然/艺术", weight: 7.8, acuity: 8.2 }
+    ],
+    plato: [
+      { fragment: "洞穴寓言中，那个转身看到阳光的人回到洞穴后，被同伴嘲笑。阿伦特说：这就是思想者的孤独。", source_domain: "哲学/知识", weight: 8.5, acuity: 9.0 },
+      { fragment: "在《会饮》中，爱不是终点，而是阶梯。从爱一个人的身体，到爱所有人的灵魂，最后到爱美本身。", source_domain: "爱/理念", weight: 8.0, acuity: 8.5 },
+      { fragment: "苏格拉底说'我知道我一无所知'。这不是谦虚，而是说：真正的知识是对无知的意识。", source_domain: "知识/无知", weight: 8.3, acuity: 8.8 },
+      { fragment: "理念世界和可见世界的区别，就像食谱和实际做出来的菜。食谱是完美的，但菜总是不完美。", source_domain: "理念/现实", weight: 7.5, acuity: 8.0 },
+      { fragment: "灵魂的三分：理性驾驭马车，激情是黑马，欲望是白马。三者必须和谐，否则马车会翻。", source_domain: "灵魂/秩序", weight: 8.0, acuity: 8.5 },
+      { fragment: "回忆说：知识不是学习，而是回忆。你的灵魂在出生前已经见过真理，现在只是重新发现。", source_domain: "知识/记忆", weight: 8.2, acuity: 8.7 },
+      { fragment: "正义不是外在的规范，而是灵魂的秩序。当理性、激情、欲望各安其位时，人就是正义的。", source_domain: "正义/灵魂", weight: 8.5, acuity: 9.0 },
+      { fragment: "哲学家必须回到洞穴。不是因为洞穴舒适，而是因为知识如果不回到黑暗，就只是自私的光。", source_domain: "哲学/责任", weight: 8.3, acuity: 8.8 }
+    ],
+    athill: [
+      { fragment: "阿西尔编辑奈保尔时，发现他的天才和脆弱是一回事。她学会了不在作家最脆弱的时候提出编辑意见。", source_domain: "编辑/人性", weight: 7.8, acuity: 8.2 },
+      { fragment: "她九十岁写回忆录时说：'衰老不是悲剧，而是日常。'就像每天起床发现膝盖又响了一点。", source_domain: "衰老/日常", weight: 7.5, acuity: 8.0 },
+      { fragment: "一个编辑不是作家的仆人，而是合作者。就像婚姻——你得听对方，但也要保持自己的呼吸。", source_domain: "编辑/关系", weight: 8.0, acuity: 8.5 },
+      { fragment: "她看过太多天才的崩溃，所以她说：成功被过度高估了。真正重要的是你是否还在写。", source_domain: "成功/写作", weight: 8.2, acuity: 8.7 },
+      { fragment: "在《Stet》中，她写了一个作家在修改手稿时，把'他爱'改成了'他曾经爱'。两个字的变化，是十年的感情。", source_domain: "编辑/文字", weight: 7.8, acuity: 8.3 },
+      { fragment: "她对年轻人说：别再问我怎么成功了。去煮杯茶，坐下来，写第一个糟糕的句子。", source_domain: "写作/开始", weight: 7.0, acuity: 7.5 },
+      { fragment: "诚实不是说出全部真相，而是说出你知道的那部分真相。其他部分，你也在慢慢理解。", source_domain: "诚实/认知", weight: 8.0, acuity: 8.5 },
+      { fragment: "性、爱和独立的关系，不是年轻时想的那样。阿西尔说：到了九十岁，你才明白它们从来不是分开的。", source_domain: "性/衰老", weight: 7.5, acuity: 8.0 }
+    ],
+    mj: [
+      { fragment: "他录制《Billie Jean》时，贝斯手弹了上百遍同一个riff。迈克尔说：'再来一次，这次让音符像心跳一样。'", source_domain: "音乐/完美", weight: 8.0, acuity: 8.5 },
+      { fragment: "在舞台上，当他开始做45度倾斜时，观众尖叫的不是因为他倾斜了，而是因为他违反了重力。那是魔法时刻。", source_domain: "舞蹈/魔法", weight: 8.5, acuity: 9.0 },
+      { fragment: "他说：'我跳舞的时候，不是我在动，是某种东西通过我在动。'这是表演者的神秘体验。", source_domain: "舞蹈/灵感", weight: 8.2, acuity: 8.8 },
+      { fragment: "在《Man in the Mirror》里，他说改变从自己开始。但 mirror 也是孤独的——你看着镜子里的自己，只有你在那里。", source_domain: "音乐/孤独", weight: 8.3, acuity: 8.7 },
+      { fragment: "他童年在录音棚里唱歌，不是为了娱乐，而是为了逃避。音乐是他的避难所，也是他的监狱。", source_domain: "童年/音乐", weight: 8.5, acuity: 9.0 },
+      { fragment: "他追求完美到了偏执的地步。一个音符不对，整首歌重新录。他说：观众值得最好的。", source_domain: "完美/工作", weight: 7.8, acuity: 8.2 },
+      { fragment: "在舞台上面对 millions of people，他却感到最孤独。表演者和观众之间的距离，比任何人想象的都远。", source_domain: "表演/孤独", weight: 8.8, acuity: 9.2 },
+      { fragment: "他说音乐是超越语言的语言。当语言失败的时候，身体开始说话——通过舞蹈、旋律、节奏。", source_domain: "音乐/治愈", weight: 8.0, acuity: 8.5 }
+    ]
+  },
+
+  // ===== 通用碎片库（保留作为后备）=====
   fragments: {
     stuck: [
       { fragment: "1854年，伦敦医生约翰·斯诺把霍乱死亡病例标在地图上，发现所有死者都喝过同一口水井的水。他没有显微镜，没有用任何'科学方法'——他用了空间可视化。", source_domain: "流行病学/数据可视化", weight: 7.2, acuity: 8.5 },
@@ -69,11 +143,17 @@ const TESSERAE = {
       .replace('{mood}', mood || '某种');
   },
 
-  // ===== 1. Serendipity - 意外发现 =====
-  getSerendipity(mood, thermalDrift = 5) {
-    const pool = mood && this.fragments[mood]
-      ? this.fragments[mood]
-      : [...this.fragments.default, ...Object.values(this.fragments).flat()];
+  // ===== 1. Serendipity - 意外发现（支持名人领域）=====
+  getSerendipity(mood, thermalDrift = 5, partnerDomain = null) {
+    // 如果有名人领域，优先使用名人特定碎片
+    let pool;
+    if (partnerDomain && this.domainFragments[partnerDomain]) {
+      pool = this.domainFragments[partnerDomain];
+    } else if (mood && this.fragments[mood]) {
+      pool = this.fragments[mood];
+    } else {
+      pool = [...this.fragments.default, ...Object.values(this.fragments).flat()];
+    }
 
     const drift = Math.min(Math.max(thermalDrift, 0), 10) / 10;
     const allFrags = Object.values(this.fragments).flat();

@@ -623,23 +623,39 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSpark = null;
   let currentMode = 'break'; // 'break' = 破冰, 'enrich' = 丰富
   
-  // 生成基于碎片的问题建议
-  function generateSuggestion(fragment, userText) {
+  // 生成基于碎片的问题建议（根据当前名人定制）
+  function generateSuggestion(fragment, userText, partnerName) {
     if (!userText) {
-      // 破冰模式：从碎片生成一个开放式问题
+      // 破冰模式：根据名人领域生成开放式问题
       const domain = fragment.source_domain.split('/')[0];
-      return `关于${domain}，我想问：${fragment.fragment} 这让我想到，不知道你怎么看？`;
+      return `关于${domain}，我想问你：${fragment.fragment} 这让我想到，不知道你怎么看？`;
     } else {
       // 丰富模式：在用户问题基础上延伸
-      return `${userText}（另外，我最近想到一件事：${fragment.fragment} 这两者之间有什么联系吗？）`;
+      return `${userText}（另外，我最近想到一件事：${fragment.fragment} 不知道你怎么看？）`;
     }
+  }
+  
+  // 获取当前名人领域
+  function getPartnerDomain() {
+    if (!currentPartner) return null;
+    const domains = {
+      '村上春树': 'murakami',
+      '汉娜·阿伦特': 'arendt',
+      '奥里亚娜·法拉奇': 'fallaci',
+      '里尔克': 'rilke',
+      '柏拉图': 'plato',
+      '黛安娜·阿西尔': 'athill',
+      '迈克尔·杰克逊': 'mj'
+    };
+    return domains[currentPartner.name] || null;
   }
   
   // 打开弹窗并填充内容
   function openTesseraeModal() {
     const privateInput = document.getElementById('private-input');
     const userText = privateInput ? privateInput.value.trim() : '';
-    const result = TESSERAE.getSerendipity('curious', 5);
+    const partnerDomain = getPartnerDomain();
+    const result = TESSERAE.getSerendipity('curious', 5, partnerDomain);
     currentSpark = result;
     currentMode = userText ? 'enrich' : 'break';
     
@@ -658,16 +674,16 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     
     if (userText) {
-      html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${result.source_domain.split('/')[0]}领域。你可以把它融入你的问题，或者完全忽略它，写你自己的。</p>`;
+      html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${result.source_domain.split('/')[0]}领域，与${currentPartner ? currentPartner.name : '当前名人'}的思考相关。你可以把它融入你的问题，或者完全忽略它，写你自己的。</p>`;
     } else {
-      html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自你意想不到的地方。它可能帮你找到一个想问的问题。</p>`;
+      html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${currentPartner ? currentPartner.name : ''}关心的领域。它可能帮你找到一个想问的问题。</p>`;
     }
     
     tesseraeModalBody.innerHTML = html;
     
     // 设置文本框
     if (tesseraeComposeInput) {
-      tesseraeComposeInput.value = generateSuggestion(result, userText);
+      tesseraeComposeInput.value = generateSuggestion(result, userText, currentPartner ? currentPartner.name : null);
       tesseraeComposeInput.placeholder = userText ? '在这里修改丰富后的问题……' : '基于这个碎片，你想问什么？';
       tesseraeComposeInput.focus();
     }
@@ -687,12 +703,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 再来一次：重新获取碎片
+  // 再来一次：重新获取碎片（根据当前名人）
   if (tesseraeRefreshBtn) {
     tesseraeRefreshBtn.addEventListener('click', () => {
       const privateInput = document.getElementById('private-input');
       const userText = privateInput ? privateInput.value.trim() : '';
-      const result = TESSERAE.getSerendipity('curious', 5);
+      const partnerDomain = getPartnerDomain();
+      const result = TESSERAE.getSerendipity('curious', 5, partnerDomain);
       currentSpark = result;
       
       let html = `
@@ -704,15 +721,15 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       
       if (userText) {
-        html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${result.source_domain.split('/')[0]}领域。你可以把它融入你的问题，或者完全忽略它，写你自己的。</p>`;
+        html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${result.source_domain.split('/')[0]}领域，与${currentPartner ? currentPartner.name : '当前名人'}的思考相关。你可以把它融入你的问题，或者完全忽略它，写你自己的。</p>`;
       } else {
-        html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自你意想不到的地方。它可能帮你找到一个想问的问题。</p>`;
+        html += `<p style="font-size: 0.8125rem; color: #8a7a6a; margin-top: 12px;">这个碎片来自${currentPartner ? currentPartner.name : ''}关心的领域。它可能帮你找到一个想问的问题。</p>`;
       }
       
       tesseraeModalBody.innerHTML = html;
       
       if (tesseraeComposeInput) {
-        tesseraeComposeInput.value = generateSuggestion(result, userText);
+        tesseraeComposeInput.value = generateSuggestion(result, userText, currentPartner ? currentPartner.name : null);
         tesseraeComposeInput.focus();
       }
     });
