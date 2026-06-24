@@ -59,6 +59,14 @@ const CAST = [
     color: '#3a1a4a',
     avatar: 'mj.png',
     reply: '孤独……我在舞台上， millions of people screaming my name……但有时候，那是一种最深的孤独。你知道的，就像你在人群中，但你感到没有人真正了解你。我写过一首歌叫《Stranger in Moscow》，那首歌是在俄罗斯的酒店里写的，外面下着雪，我在房间里，感到自己像个陌生人。但是……音乐让我不再孤独。当我跳舞的时候，我感觉到某种东西连接着我和其他人。也许你也需要找到属于你的那个舞台。'
+  },
+  {
+    name: '木心',
+    field: '文学 / 绘画 / 美学',
+    initial: '木',
+    color: '#2a2a2a',
+    avatar: 'muxin.png',
+    reply: '我这一生，说来都是错的。从二十二岁到五十六岁，我不发一字。那时候的人，多少右派、反革命、边缘人，都巴望时代收容，我不然。我只是在写，在画，在裁缝自己的衬衫，在煮一锅好菜。孤独？你要爱你的寂寞，像对待一个病人一样温柔地对待它。文学是一字一字地救出自己，书法是一笔一笔地救出自己。没有长夜痛哭过的人，不足语人生。'
   }
 ];
 
@@ -645,7 +653,8 @@ document.addEventListener('DOMContentLoaded', () => {
       '里尔克': 'rilke',
       '柏拉图': 'plato',
       '黛安娜·阿西尔': 'athill',
-      '迈克尔·杰克逊': 'mj'
+      '迈克尔·杰克逊': 'mj',
+      '木心': 'muxin'
     };
     return domains[currentPartner.name] || null;
   }

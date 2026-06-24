@@ -76,6 +76,16 @@ const TESSERAE = {
       { fragment: "他追求完美到了偏执的地步。一个音符不对，整首歌重新录。他说：观众值得最好的。", source_domain: "完美/工作", weight: 7.8, acuity: 8.2 },
       { fragment: "在舞台上面对 millions of people，他却感到最孤独。表演者和观众之间的距离，比任何人想象的都远。", source_domain: "表演/孤独", weight: 8.8, acuity: 9.2 },
       { fragment: "他说音乐是超越语言的语言。当语言失败的时候，身体开始说话——通过舞蹈、旋律、节奏。", source_domain: "音乐/治愈", weight: 8.0, acuity: 8.5 }
+    ],
+    muxin: [
+      { fragment: "他临终前写的诗里有五个字：风啊，水啊，一顶桥。不是风和水，而是风啊水啊——语气词里藏着一个人最后的温柔。", source_domain: "文学/告别", weight: 8.8, acuity: 9.2 },
+      { fragment: "文革时被关在积水的防空洞里，他坐着出来，裤子还有笔直的裤缝。他说：一死了之是容易的，我选难的。", source_domain: "生存/尊严", weight: 9.0, acuity: 9.5 },
+      { fragment: "他从1949年到1982年出国，三十三年不发表作品。他说：我一件事可以拒绝时代，就是文学艺术。", source_domain: "文学/抵抗", weight: 8.5, acuity: 9.0 },
+      { fragment: "陈丹青笔记里记了五年他的课。木心说：你们不是来听课的，是来听一个人说话的。文学史在他嘴里变成了一个人。", source_domain: "讲课/传承", weight: 8.2, acuity: 8.8 },
+      { fragment: "他写字极慢，像刺绣。他说：文学是一字一字救出自己。不是快，而是每个字都要对得起。", source_domain: "写作/慢", weight: 8.5, acuity: 9.0 },
+      { fragment: "他一辈子不合时宜，时宜也不合他。他前半生做的事，就是不给时代吞没。老派和精致是他的武器。", source_domain: "生存/老派", weight: 8.3, acuity: 8.7 },
+      { fragment: "他说：文学是可爱的，生活是好玩的，艺术是要有所牺牲的。三件事，三个态度，藏着三种不同的勇敢。", source_domain: "文学/生活", weight: 8.0, acuity: 8.5 },
+      { fragment: "从乌镇到纽约，他漂泊了大半生。问他哪里是家，他说：艺术家没有故乡，故乡是作品。", source_domain: "漂泊/艺术", weight: 8.2, acuity: 8.6 }
     ]
   },
 
