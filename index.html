@@ -27,7 +27,8 @@
       <div class="loading-dot" data-index="5"></div>
       <div class="loading-dot" data-index="6"></div>
     </div>
-    <div id="loading-text" class="loading-text">七位思想家正在落座……</div>
+    <div class="loading-subtitle" style="margin-top: 12px; font-size: 0.75rem; color: #6a5a4a; letter-spacing: 0.05em;">本页面所有对话由 AI 生成模拟，仅为创意表达</div>
+    <div id="loading-text" class="loading-text">八位思想家正在落座……</div>
   </div>
 
   <!-- =========================================
@@ -118,12 +119,12 @@
       <!-- Tesserae 共鸣测量 -->
       <div class="tesserae-resonance" id="tesserae-resonance" style="display:none;">
         <div class="tesserae-resonance-header">
-          <span class="tesserae-icon">✦</span> 七人共鸣测量
+          <span class="tesserae-icon">✦</span> 八人共鸣测量
         </div>
         <div class="tesserae-resonance-body" id="tesserae-resonance-body"></div>
         <button class="tesserae-close" id="tesserae-resonance-close">关闭</button>
       </div>
-      <button class="tesserae-btn" id="btn-measure-resonance" style="display:none;">✦ 测量七人共鸣</button>
+      <button class="tesserae-btn" id="btn-measure-resonance" style="display:none;">✦ 测量八人共鸣</button>
     </div>
   </section>
 
@@ -138,17 +139,15 @@
       <button class="end-btn" data-end>结束对话</button>
     </div>
     <div class="input-container">
-      
       <h2 class="input-title">选择一位对话者</h2>
       <p class="input-subtitle">你想与谁深入交流？</p>
       
-      <div id="private-select-gallery" style="
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-        max-width: 800px;
-        margin: 40px auto;
-      "></div>
+      <div class="card-stack-container">
+        <button class="card-stack-arrow card-stack-prev" id="card-stack-prev">‹</button>
+        <div id="private-select-gallery" class="card-stack"></div>
+        <button class="card-stack-arrow card-stack-next" id="card-stack-next">›</button>
+      </div>
+      <div class="card-stack-dots" id="card-stack-dots"></div>
     </div>
   </section>
 

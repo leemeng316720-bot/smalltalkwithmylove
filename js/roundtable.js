@@ -486,7 +486,7 @@ async function sendPrivateMessage() {
       userQuestion: userText,
       history: history
     });
-    addMessageBubble(messages, result.content, 'celebrity');
+    addMessageBubble(messages, result.content, 'celebrity', currentPartner.name);
     
     // 记录本次调用
     recordUsage('private');
@@ -509,7 +509,7 @@ async function sendPrivateMessage() {
       errorMsg += '，请检查 API Key 或稍后再试';
     }
     errorMsg += '。）';
-    addMessageBubble(messages, errorMsg, 'celebrity');
+    addMessageBubble(messages, errorMsg, 'celebrity', '系统');
   } finally {
     input.disabled = false;
     if (sendBtn) sendBtn.disabled = false;
@@ -518,7 +518,17 @@ async function sendPrivateMessage() {
   }
 }
 
-function addMessageBubble(container, text, type) {
+function addMessageBubble(container, text, type, name) {
+  const wrapper = document.createElement('div');
+  wrapper.className = `chat-bubble-wrapper ${type}`;
+  
+  if (type === 'celebrity' && name) {
+    const nameTag = document.createElement('div');
+    nameTag.className = 'chat-bubble-name';
+    nameTag.textContent = name;
+    wrapper.appendChild(nameTag);
+  }
+  
   const bubble = document.createElement('div');
   bubble.className = `chat-bubble ${type}`;
   
@@ -528,7 +538,8 @@ function addMessageBubble(container, text, type) {
     bubble.textContent = text;
   }
   
-  container.appendChild(bubble);
+  wrapper.appendChild(bubble);
+  container.appendChild(wrapper);
   container.scrollTop = container.scrollHeight;
 }
 
@@ -777,7 +788,85 @@ document.addEventListener('DOMContentLoaded', () => {
       const body = document.getElementById('tesserae-resonance-body');
       if (!body) return;
       
-      let html = '';
+      // 生成雷达图
+      const personCount = replies.length;
+      const centerX = 160, centerY = 160, radius = 120;
+      const angleStep = (2 * Math.PI) / personCount;
+      const avgResonance = [];
+      
+      for (let i = 0; i < personCount; i++) {
+        let sum = 0, count = 0;
+        for (let j = 0; j < personCount; j++) {
+          if (i !== j) {
+            const r = TESSERAE.measureResonance(replies[i].reply, replies[j].reply, 3);
+            sum += r.resonance;
+            count++;
+          }
+        }
+        avgResonance.push({ name: replies[i].name, value: count ? sum / count : 0 });
+      }
+      
+      const maxVal = 10;
+      const minVal = -10;
+      const range = maxVal - minVal;
+      
+      let points = '';
+      let axisLabels = '';
+      let axisLines = '';
+      
+      for (let i = 0; i < personCount; i++) {
+        const angle = i * angleStep - Math.PI / 2;
+        const val = avgResonance[i].value;
+        const normalized = (val - minVal) / range;
+        const r = normalized * radius;
+        const x = centerX + r * Math.cos(angle);
+        const y = centerY + r * Math.sin(angle);
+        points += `${x},${y} `;
+        
+        // 轴标签
+        const labelR = radius + 24;
+        const lx = centerX + labelR * Math.cos(angle);
+        const ly = centerY + labelR * Math.sin(angle);
+        axisLabels += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#8a7a6a">${avgResonance[i].name.slice(0, 2)}</text>`;
+        
+        // 轴线
+        axisLines += `<line x1="${centerX}" y1="${centerY}" x2="${centerX + radius * Math.cos(angle)}" y2="${centerY + radius * Math.sin(angle)}" stroke="#3a3228" stroke-width="0.5" opacity="0.5"/>`;
+      }
+      
+      // 计算圆环（共鸣度等值线）
+      const ringLevels = [0.25, 0.5, 0.75];
+      let rings = '';
+      for (const level of ringLevels) {
+        const ringR = level * radius;
+        rings += `<circle cx="${centerX}" cy="${centerY}" r="${ringR}" fill="none" stroke="#3a3228" stroke-width="0.5" opacity="0.3"/>`;
+      }
+      
+      const radarSvg = `
+        <div class="tesserae-radar-wrapper">
+          <div class="tesserae-radar-title">八维共鸣雷达图</div>
+          <svg width="320" height="320" viewBox="0 0 320 320" class="tesserae-radar-svg">
+            <defs>
+              <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#c9a96e;stop-opacity:0.2" />
+                <stop offset="100%" style="stop-color:#8a7a6a;stop-opacity:0.1" />
+              </linearGradient>
+            </defs>
+            ${rings}
+            ${axisLines}
+            <polygon points="${points}" fill="url(#radarFill)" stroke="#c9a96e" stroke-width="1.5" opacity="0.8"/>
+            ${points.split(' ').filter(p => p).map((p, i) => {
+              const [px, py] = p.split(',');
+              return `<circle cx="${px}" cy="${py}" r="3" fill="#c9a96e"/>`;
+            }).join('')}
+            ${axisLabels}
+          </svg>
+          <div class="tesserae-radar-legend">
+            ${avgResonance.map(p => `<span class="tesserae-radar-dot" style="color: ${replies.find(r => r.name === p.name)?.color || '#8a7a6a'}">${p.name.slice(0, 2)}: ${p.value.toFixed(1)}</span>`).join('')}
+          </div>
+        </div>
+      `;
+      
+      let listHtml = '<div class="tesserae-resonance-list">';
       const phaseClass = {
         constructive: 'tesserae-phase-constructive',
         destructive: 'tesserae-phase-destructive',
@@ -791,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const result = TESSERAE.measureResonance(replies[i].reply, replies[j].reply, 3);
           const pc = phaseClass[result.phase] || '';
           
-          html += `
+          listHtml += `
             <div class="tesserae-resonance-item">
               <div class="tesserae-resonance-pair">${replies[i].name} ↔ ${replies[j].name}</div>
               <div class="tesserae-resonance-value">
@@ -803,8 +892,9 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
         }
       }
+      listHtml += '</div>';
       
-      body.innerHTML = html || '<p style="color: #8a7a6a;">没有足够的数据来测量共鸣。</p>';
+      body.innerHTML = radarSvg + listHtml;
       resonancePanel.style.display = 'block';
       resonanceBtn.style.display = 'none';
     });
@@ -886,25 +976,103 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 渲染单人对谈选择页
+  // 渲染单人对谈选择页 - 堆叠卡片
   const selectGallery = document.getElementById('private-select-gallery');
-  if (selectGallery) {
+  const cardStackPrev = document.getElementById('card-stack-prev');
+  const cardStackNext = document.getElementById('card-stack-next');
+  const cardStackDots = document.getElementById('card-stack-dots');
+  let currentCardIndex = 0;
+  
+  function renderCardStack() {
+    if (!selectGallery) return;
+    selectGallery.innerHTML = '';
+    
     CAST.forEach((cast, i) => {
       const card = document.createElement('div');
-      card.className = 'select-card';
+      card.className = 'select-card' + (i === currentCardIndex ? ' active' : '');
+      card.dataset.index = i;
       card.style.setProperty('--accent-color', cast.color);
       card.innerHTML = `
         <div class="select-avatar" style="--accent-color: ${cast.color}"><img src="avatars/${cast.avatar}" alt="${cast.name}"></div>
         <div class="select-name">${cast.name}</div>
         <div class="select-field">${cast.field}</div>
+        <div class="select-quote">${cast.reply ? cast.reply.slice(0, 60) + '...' : ''}</div>
+        <button class="select-choose-btn" data-index="${i}">选择此人</button>
       `;
-      card.addEventListener('click', () => startPrivateChat(i));
       selectGallery.appendChild(card);
-      
-      //  staggered 入场动画
-      setTimeout(() => {
-        card.classList.add('entered');
-      }, 80 + i * 120);
+    });
+    
+    // 圆点指示器
+    if (cardStackDots) {
+      cardStackDots.innerHTML = '';
+      CAST.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'card-dot' + (i === currentCardIndex ? ' active' : '');
+        dot.addEventListener('click', () => {
+          currentCardIndex = i;
+          updateCardStack();
+        });
+        cardStackDots.appendChild(dot);
+      });
+    }
+    
+    // 选择按钮事件
+    selectGallery.querySelectorAll('.select-choose-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.dataset.index);
+        startPrivateChat(idx);
+      });
     });
   }
+  
+  function updateCardStack() {
+    const cards = selectGallery.querySelectorAll('.select-card');
+    cards.forEach((card, i) => {
+      card.className = 'select-card' + (i === currentCardIndex ? ' active' : '');
+    });
+    const dots = cardStackDots.querySelectorAll('.card-dot');
+    dots.forEach((dot, i) => {
+      dot.className = 'card-dot' + (i === currentCardIndex ? ' active' : '');
+    });
+  }
+  
+  if (cardStackPrev) {
+    cardStackPrev.addEventListener('click', () => {
+      currentCardIndex = (currentCardIndex - 1 + CAST.length) % CAST.length;
+      updateCardStack();
+    });
+  }
+  
+  if (cardStackNext) {
+    cardStackNext.addEventListener('click', () => {
+      currentCardIndex = (currentCardIndex + 1) % CAST.length;
+      updateCardStack();
+    });
+  }
+  
+  // 触摸滑动
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  if (selectGallery) {
+    selectGallery.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    selectGallery.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          currentCardIndex = (currentCardIndex + 1) % CAST.length;
+        } else {
+          currentCardIndex = (currentCardIndex - 1 + CAST.length) % CAST.length;
+        }
+        updateCardStack();
+      }
+    }, { passive: true });
+  }
+  
+  renderCardStack();
 });
