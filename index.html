@@ -7,6 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a1714">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="名人对谈">
   <link rel="stylesheet" href="css/salon.css">
 </head>
 <body>
@@ -232,6 +237,16 @@
       </div>
     </div>
   </div>
+
+  <!-- 添加到桌面按钮（PWA） -->
+  <button id="btn-install-pwa" class="install-pwa-btn" style="display:none;" title="添加到桌面">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    <span>添加到桌面</span>
+  </button>
 
   <script src="js/tesserae.js"></script>
   <script src="js/roundtable.js"></script>

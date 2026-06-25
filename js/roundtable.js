@@ -1091,4 +1091,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   renderCardStack();
+  
+  // =========================================
+  // PWA：添加到桌面
+  // =========================================
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('btn-install-pwa');
+  
+  // 监听安装提示事件
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBtn) {
+      installBtn.style.display = 'flex';
+    }
+  });
+  
+  // 点击安装按钮
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBtn.style.display = 'none';
+      }
+      deferredPrompt = null;
+    });
+  }
+  
+  // 如果已经安装，隐藏按钮
+  window.addEventListener('appinstalled', () => {
+    if (installBtn) {
+      installBtn.style.display = 'none';
+    }
+    deferredPrompt = null;
+  });
+  
+  // iOS Safari 不支持 beforeinstallprompt，显示手动提示
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  
+  if (isIOS && !isStandalone && installBtn) {
+    installBtn.style.display = 'flex';
+    installBtn.querySelector('span').textContent = '添加到主屏幕';
+    installBtn.addEventListener('click', () => {
+      alert('请按分享按钮 ⋯ ，然后选择"添加到主屏幕"');
+    });
+  }
+  
+  // 已经处于 standalone 模式，隐藏按钮
+  if (isStandalone && installBtn) {
+    installBtn.style.display = 'none';
+  }
 });
